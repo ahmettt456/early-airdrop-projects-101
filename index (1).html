@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Airdrop Radar – Güncel airdrop projeleri</title>
+<meta name="description" content="Takip ettiğim airdrop projeleri: görevler, son tarihler ve bağlantılar tek sayfada.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪂</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#EAF4FB; --card:#FFFFFF; --ink:#0E2A47; --muted:#4F6A85; --line:#BFD6E8;
+  --chute:#FFC83D; --chute-ink:#3A2A00; --ok:#12805C; --warn:#B45309; --end:#6B7C8F;
+  --font:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--sky:#0A1B2E;--card:#112B46;--ink:#EAF4FB;--muted:#9DB6CE;--line:#25486B;--ok:#4ADE9E;--warn:#FBBF24;--end:#8FA3B8}
+}
+:root[data-theme="dark"]{--sky:#0A1B2E;--card:#112B46;--ink:#EAF4FB;--muted:#9DB6CE;--line:#25486B;--ok:#4ADE9E;--warn:#FBBF24;--end:#8FA3B8}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--sky);color:var(--ink);font-family:var(--font);line-height:1.5;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{padding:48px 0 28px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-weight:800;font-size:1.1rem;display:flex;align-items:center;gap:8px}
+.brand span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50% 50% 50% 8px;background:var(--chute);font-size:1.1rem}
+.icon-btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer}
+h1{font-size:clamp(2.2rem,6vw,4.2rem);line-height:1.02;letter-spacing:-.03em;font-weight:800;margin:36px 0 14px;max-width:14ch}
+.lead{color:var(--muted);max-width:52ch;margin:0;font-size:1.1rem}
+.tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:32px 0 22px}
+input[type=search]{flex:1 1 240px;min-width:0;padding:12px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+input[type=search]:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--chute);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:.92rem;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--sky);border-color:var(--ink)}
+.count{color:var(--muted);font-size:.95rem;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;padding-bottom:40px}
+.ticket{background:var(--card);border:1.5px solid var(--line);border-radius:18px;display:flex;flex-direction:column;overflow:hidden}
+.t-main{padding:20px 20px 16px}
+.t-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.t-head h2{margin:0;font-size:1.3rem;letter-spacing:-.01em}
+.status{font-size:.82rem;font-weight:600;padding:3px 10px;border-radius:999px;border:1.5px solid currentColor;white-space:nowrap}
+.s-active{color:var(--ok)}.s-soon{color:var(--warn)}.s-ended{color:var(--end)}
+.meta{color:var(--muted);font-size:.92rem;margin:4px 0 12px}
+.desc{margin:0 0 14px}
+.tasks{margin:0;padding-left:18px;color:var(--muted);font-size:.93rem}
+.t-foot{border-top:2px dashed var(--line);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative}
+.t-foot::before,.t-foot::after{content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:var(--sky);border:1.5px solid var(--line)}
+.t-foot::before{left:-11px}.t-foot::after{right:-11px}
+.deadline{font-size:.9rem}
+.deadline b{display:block;font-size:1rem}
+.go{background:var(--chute);color:var(--chute-ink);font-weight:700;text-decoration:none;padding:9px 16px;border-radius:10px;white-space:nowrap}
+.go:hover{filter:brightness(.95)}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0}
+.note{border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:16px 20px;color:var(--muted);font-size:.93rem;margin-bottom:40px}
+.note b{color:var(--ink)}
+footer{padding:0 0 40px;color:var(--muted);font-size:.9rem}
+@media (prefers-reduced-motion:no-preference){.ticket{transition:transform .15s}.ticket:hover{transform:translateY(-3px)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="top">
+      <div class="brand"><span aria-hidden="true">🪂</span> Airdrop Radar</div>
+      <button class="icon-btn" id="theme" type="button" aria-label="Temayı değiştir">Tema</button>
+    </div>
+    <h1>Takip ettiğim airdrop’lar</h1>
+    <p class="lead">Görevleri, son tarihleri ve resmi bağlantıları tek yerde topladım. Güncellendikçe yeni projeler eklenir.</p>
+  </header>
+
+  <main>
+    <div class="tools">
+      <input type="search" id="q" placeholder="Proje veya ağ ara…" aria-label="Proje ara">
+      <div class="chips" id="status" role="group" aria-label="Duruma göre filtrele"></div>
+    </div>
+    <div class="chips" id="chains" role="group" aria-label="Ağa göre filtrele" style="margin-bottom:18px"></div>
+    <p class="count" id="count" aria-live="polite"></p>
+    <section class="grid" id="grid"></section>
+
+    <div class="note">
+      <b>Yatırım tavsiyesi değildir.</b> Burada paylaşılanlar yalnızca bilgilendirme amaçlıdır. Her zaman resmi siteyi kontrol et, cüzdan şifreni / seed phrase’ini kimseyle paylaşma ve ana cüzdanın yerine ayrı bir cüzdan kullan. Bir airdrop’ın gerçekleşeceğinin veya değer taşıyacağının garantisi yoktur.
+    </div>
+  </main>
+
+  <footer>© <span id="y"></span> Airdrop Radar</footer>
+</div>
+
+<script>
+/* ============================================================
+   PROJELERİ BURADAN DÜZENLE
+   Aşağıdaki liste örnek veridir. Kendi projelerinle değiştir.
+   status: "active" | "soon" | "ended"
+   deadline: "YYYY-MM-DD" (boş bırakılabilir: "")
+   ============================================================ */
+const PROJECTS = [
+  {
+    name: "Örnek Proje A", chain: "Ethereum", status: "active", deadline: "2026-12-15",
+    reward: "Token + NFT",
+    desc: "Testnet üzerinde işlem yaparak puan topla. Puanlar snapshot’ta token’a dönüşebilir.",
+    tasks: ["Cüzdanı bağla", "Testnet’te 5 swap yap", "Discord’a katıl"],
+    link: "https://example.com"
+  },
+  {
+    name: "Örnek Proje B", chain: "Solana", status: "active", deadline: "2026-11-30",
+    reward: "Puan sistemi",
+    desc: "Likidite sağlayarak ve günlük görevleri tamamlayarak sezon puanı kazan.",
+    tasks: ["Hesap oluştur", "Likidite ekle", "Arkadaş davet et"],
+    link: "https://example.com"
+  },
+  {
+    name: "Örnek Proje C", chain: "Base", status: "soon", deadline: "",
+    reward: "Açıklanmadı",
+    desc: "Mainnet yakında. Erken kullanıcılar için ödül sinyalleri var, takipte kal.",
+    tasks: ["Waitlist’e kaydol", "X hesabını takip et"],
+    link: "https://example.com"
+  },
+  {
+    name: "Örnek Proje D", chain: "Arbitrum", status: "ended", deadline: "2026-09-01",
+    reward: "Dağıtıldı",
+    desc: "Claim dönemi tamamlandı. Arşiv olarak burada duruyor.",
+    tasks: ["Snapshot alındı"],
+    link: "https://example.com"
+  }
+];
+
+const STATUS = {active:"Aktif", soon:"Yakında", ended:"Bitti"};
+const state = {q:"", status:"all", chain:"all"};
+const $ = id => document.getElementById(id);
+
+function daysLeft(d){
+  if(!d) return null;
+  return Math.ceil((new Date(d+"T23:59:59") - new Date())/86400000);
+}
+function deadlineText(p){
+  if(p.status==="ended") return ["Bitti", p.deadline ? new Date(p.deadline).toLocaleDateString("tr-TR") : "—"];
+  const n = daysLeft(p.deadline);
+  if(n===null) return ["Son tarih", "Belirsiz"];
+  if(n<0) return ["Son tarih", "Geçti"];
+  return ["Kalan süre", n===0 ? "Bugün bitiyor" : n+" gün"];
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function chips(el, items, key){
+  el.innerHTML = "";
+  items.forEach(([val,label]) => {
+    const b = document.createElement("button");
+    b.type="button"; b.className="chip"; b.textContent=label;
+    b.setAttribute("aria-pressed", state[key]===val);
+    b.onclick = () => { state[key]=val; render(); };
+    el.appendChild(b);
+  });
+}
+
+function render(){
+  chips($("status"), [["all","Hepsi"],["active","Aktif"],["soon","Yakında"],["ended","Bitti"]], "status");
+  const chains = [...new Set(PROJECTS.map(p=>p.chain))].sort();
+  chips($("chains"), [["all","Tüm ağlar"], ...chains.map(c=>[c,c])], "chain");
+
+  const q = state.q.trim().toLowerCase();
+  const list = PROJECTS.filter(p =>
+    (state.status==="all" || p.status===state.status) &&
+    (state.chain==="all" || p.chain===state.chain) &&
+    (!q || (p.name+" "+p.chain+" "+p.desc).toLowerCase().includes(q))
+  );
+
+  $("count").textContent = list.length + " proje listeleniyor";
+  $("grid").innerHTML = list.length ? list.map(p => {
+    const [dl, dv] = deadlineText(p);
+    return `<article class="ticket">
+      <div class="t-main">
+        <div class="t-head"><h2>${esc(p.name)}</h2><span class="status s-${p.status}">${STATUS[p.status]}</span></div>
+        <p class="meta">${esc(p.chain)} • Ödül: ${esc(p.reward)}</p>
+        <p class="desc">${esc(p.desc)}</p>
+        <ul class="tasks">${p.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+      </div>
+      <div class="t-foot">
+        <div class="deadline">${dl}<b>${dv}</b></div>
+        <a class="go" href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">Projeye git</a>
+      </div>
+    </article>`;
+  }).join("") : `<p class="empty">Eşleşen proje yok. Filtreleri temizleyip tekrar dene.</p>`;
+}
+
+$("q").addEventListener("input", e => { state.q = e.target.value; render(); });
+$("y").textContent = new Date().getFullYear();
+$("theme").onclick = () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme==="dark" : matchMedia("(prefers-color-scheme:dark)").matches;
+  r.dataset.theme = dark ? "light" : "dark";
+};
+render();
+</script>
+</body>
+</html>

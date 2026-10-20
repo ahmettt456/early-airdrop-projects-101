@@ -38,7 +38,10 @@ input[type=search]:focus-visible,button:focus-visible,a:focus-visible{outline:3p
 .t-head h2{margin:0;font-size:1.3rem;letter-spacing:-.01em}
 .status{font-size:.82rem;font-weight:600;padding:3px 10px;border-radius:999px;border:1.5px solid currentColor;white-space:nowrap}
 .s-active{color:var(--ok)}.s-soon{color:var(--warn)}.s-ended{color:var(--end)}
-.meta{color:var(--muted);font-size:.92rem;margin:4px 0 12px}
+.meta{color:var(--muted);font-size:.92rem;margin:4px 0 8px}
+.stars{display:flex;align-items:center;gap:8px;margin:0 0 12px;font-size:.88rem;color:var(--muted)}
+.stars .row{color:var(--chute);font-size:1.15rem;letter-spacing:2px;line-height:1}
+.stars .off{color:var(--line)}
 .desc{margin:0 0 14px}
 .fund{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 14px}
 .fund-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
@@ -78,6 +81,7 @@ footer{padding:0 0 40px;color:var(--muted);font-size:.9rem}
       <div class="chips" id="status" role="group" aria-label="Filter by status"></div>
     </div>
     <div class="chips" id="chains" role="group" aria-label="Filter by chain" style="margin-bottom:18px"></div>
+    <div class="chips" id="sort" role="group" aria-label="Sort projects" style="margin-bottom:18px"></div>
     <p class="count" id="count" aria-live="polite"></p>
     <section class="grid" id="grid"></section>
 
@@ -98,10 +102,11 @@ footer{padding:0 0 40px;color:var(--muted);font-size:.9rem}
    funding: total funding raised, e.g. "$12M" (use "" if unknown)
    round: funding round, e.g. "Seed", "Series A" (use "" if unknown)
    investors: list of investors, e.g. ["Fund 1", "Fund 2"] (use [] if none)
+   rating: your trust score from 1 to 5 stars (use 0 if not rated yet)
    ============================================================ */
 const PROJECTS = [
   {
-    name: "SteepUp", chain: "Giwa", status: "soon", deadline: "",
+    name: "SteepUp", chain: "Giwa", status: "soon", deadline: "", rating: 2,
     reward: "Undisclosed",
     funding: "", round: "",
     investors: [],
@@ -111,7 +116,7 @@ const PROJECTS = [
   },
 
   {
-    name: "BingoFi", chain: "Giwa", status: "active", deadline: "",
+    name: "BingoFi", chain: "Giwa", status: "active", deadline: "", rating: 1,
     reward: "Points",
     funding: "", round: "",
     investors: [],
@@ -121,7 +126,7 @@ const PROJECTS = [
   },
 
   {
-    name: "Pascal", chain: "PM", status: "active", deadline: "",
+    name: "Pascal", chain: "PM", status: "active", deadline: "", rating: 5,
     reward: "Potential Points System",
     funding: "$15M", round: "Series A",
     investors: ["USV", "Wintermute"],
@@ -131,7 +136,7 @@ const PROJECTS = [
   },
 
   {
-    name: "Share", chain: "PM", status: "active", deadline: "",
+    name: "Share", chain: "PM", status: "active", deadline: "", rating: 4,
     reward: "Points",
     funding: "$5M", round: "Undisclosed",
     investors: ["Coinbase"],
@@ -141,7 +146,7 @@ const PROJECTS = [
   },
 
   {
-    name: "XO", chain: "PM", status: "active", deadline: "",
+    name: "XO", chain: "PM", status: "active", deadline: "", rating: 4,
     reward: "Points",
     funding: "$7.2M", round: "Seed",
     investors: ["Coinbase", "Delphi Ventures"],
@@ -151,7 +156,7 @@ const PROJECTS = [
   },
 
   {
-    name: "Bento", chain: "PM", status: "active", deadline: "",
+    name: "Bento", chain: "PM", status: "active", deadline: "", rating: 3,
     reward: "Potential Points System",
     funding: "$500K", round: "Incubation",
     investors: ["Yzi Labs"],
@@ -159,33 +164,31 @@ const PROJECTS = [
     tasks: ["Create an account", "Trade"],
     link: "https://app.bento.fun/?invite=BE9NT5LRIT"
   },
-  
+
   {
-    name: "Kash", chain: "PM", status: "active", deadline: "",
+    name: "Kash", chain: "PM", status: "active", deadline: "", rating: 4,
     reward: "Badge & XP",
     funding: "$2.0M", round: "Pree-Seed",
-    investors: ["Coinbase", "Spartan Group" , "Big Brain"],
+    investors: ["Coinbase", "Spartan Group", "Big Brain"],
     desc: "Trade and earn badge",
     tasks: ["Log in with your X account", "Trade"],
     link: "https://app.kash.bot/r/y42ss4sibx"
   },
-    
+
   {
-    name: "Poll", chain: "PM", status: "active", deadline: "",
+    name: "Poll", chain: "PM", status: "active", deadline: "", rating: 3,
     reward: "Points",
     funding: "$500K", round: "Incubation",
-    investors: ["Alliance", "Fabric Ventures" , "Animoca Ventures"],
+    investors: ["Alliance", "Fabric Ventures", "Animoca Ventures"],
     desc: "Trade and earn badge",
     tasks: ["Log in with your mail", "Trade"],
     link: "https://poll.fun/@ahmet"
   },
 
-
-
 ];
 
 const STATUS = {active:"Active", soon:"Waitlist", ended:"Ended"};
-const state = {q:"", status:"all", chain:"all"};
+const state = {q:"", status:"all", chain:"all", sort:"default"};
 const $ = id => document.getElementById(id);
 
 function daysLeft(d){ return d ? Math.ceil((new Date(d+"T23:59:59") - new Date())/86400000) : null; }
@@ -197,6 +200,12 @@ function deadlineText(p){
   return ["Time left", n===0 ? "Ends today" : n + (n===1 ? " day" : " days")];
 }
 function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function starsHtml(p){
+  const r = Math.max(0, Math.min(5, Math.round(p.rating||0)));
+  if(!r) return `<div class="stars"><span>Not rated yet</span></div>`;
+  return `<div class="stars" aria-label="My rating: ${r} out of 5"><span class="row" aria-hidden="true">${"★".repeat(r)}<span class="off">${"★".repeat(5-r)}</span></span><span>${r}/5 my trust</span></div>`;
+}
 
 function fundHtml(p){
   const inv = (p.investors||[]);
@@ -222,6 +231,7 @@ function render(){
   chips($("status"), [["all","All"],["active","Active"],["soon","Waitlist"],["ended","Ended"]], "status");
   const chains = [...new Set(PROJECTS.map(p=>p.chain))].sort();
   chips($("chains"), [["all","All chains"], ...chains.map(c=>[c,c])], "chain");
+  chips($("sort"), [["default","Default order"],["rating","Top rated first"]], "sort");
 
   const q = state.q.trim().toLowerCase();
   const list = PROJECTS.filter(p =>
@@ -230,6 +240,8 @@ function render(){
     (!q || (p.name+" "+p.chain+" "+p.desc+" "+(p.investors||[]).join(" ")).toLowerCase().includes(q))
   );
 
+  if(state.sort==="rating") list.sort((a,b)=>(b.rating||0)-(a.rating||0));
+
   $("count").textContent = list.length + (list.length===1 ? " project listed" : " projects listed");
   $("grid").innerHTML = list.length ? list.map(p => {
     const [dl, dv] = deadlineText(p);
@@ -237,6 +249,7 @@ function render(){
       <div class="t-main">
         <div class="t-head"><h2>${esc(p.name)}</h2><span class="status s-${p.status}">${STATUS[p.status]}</span></div>
         <p class="meta">${esc(p.chain)} • Reward: ${esc(p.reward)}</p>
+        ${starsHtml(p)}
         <p class="desc">${esc(p.desc)}</p>
         ${fundHtml(p)}
         <ul class="tasks">${p.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>

@@ -3,31 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Early Airdrop Radar</title>
-<meta name="description" content="Takip ettiğim airdrop projeleri: görevler, son tarihler ve bağlantılar tek sayfada.">
+<title>Airdrop Radar – Güncel airdrop projeleri</title>
+<meta name="description" content="Takip ettiğim airdrop projeleri: görevler, aldıkları yatırımlar, yatırımcılar ve son tarihler tek sayfada.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪂</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --sky:#EAF4FB; --card:#FFFFFF; --ink:#0E2A47; --muted:#4F6A85; --line:#BFD6E8;
-  --chute:#FFC83D; --chute-ink:#3A2A00; --ok:#12805C; --warn:#B45309; --end:#6B7C8F;
+  color-scheme:dark; --sky:#0A1B2E; --card:#112B46; --ink:#EAF4FB; --muted:#9DB6CE; --line:#25486B;
+  --chute:#FFC83D; --chute-ink:#3A2A00; --ok:#4ADE9E; --warn:#FBBF24; --end:#8FA3B8;
   --font:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--sky:#0A1B2E;--card:#112B46;--ink:#EAF4FB;--muted:#9DB6CE;--line:#25486B;--ok:#4ADE9E;--warn:#FBBF24;--end:#8FA3B8}
-}
-:root[data-theme="dark"]{--sky:#0A1B2E;--card:#112B46;--ink:#EAF4FB;--muted:#9DB6CE;--line:#25486B;--ok:#4ADE9E;--warn:#FBBF24;--end:#8FA3B8}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--sky);color:var(--ink);font-family:var(--font);line-height:1.5;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 header{padding:48px 0 28px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .brand{font-weight:800;font-size:1.1rem;display:flex;align-items:center;gap:8px}
 .brand span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50% 50% 50% 8px;background:var(--chute);font-size:1.1rem}
-.icon-btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer}
 h1{font-size:clamp(2.2rem,6vw,4.2rem);line-height:1.02;letter-spacing:-.03em;font-weight:800;margin:36px 0 14px;max-width:14ch}
 .lead{color:var(--muted);max-width:52ch;margin:0;font-size:1.1rem}
 .tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:32px 0 22px}
@@ -37,7 +31,7 @@ input[type=search]:focus-visible,button:focus-visible,a:focus-visible{outline:3p
 .chip{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:.92rem;cursor:pointer}
 .chip[aria-pressed=true]{background:var(--ink);color:var(--sky);border-color:var(--ink)}
 .count{color:var(--muted);font-size:.95rem;margin:0 0 14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;padding-bottom:40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;padding-bottom:40px}
 .ticket{background:var(--card);border:1.5px solid var(--line);border-radius:18px;display:flex;flex-direction:column;overflow:hidden}
 .t-main{padding:20px 20px 16px}
 .t-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
@@ -46,8 +40,17 @@ input[type=search]:focus-visible,button:focus-visible,a:focus-visible{outline:3p
 .s-active{color:var(--ok)}.s-soon{color:var(--warn)}.s-ended{color:var(--end)}
 .meta{color:var(--muted);font-size:.92rem;margin:4px 0 12px}
 .desc{margin:0 0 14px}
+.fund{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 14px}
+.fund-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.fund-top span{color:var(--muted);font-size:.88rem}
+.fund-top b{font-size:1.25rem;letter-spacing:-.01em}
+.round{color:var(--muted);font-size:.85rem;margin:0 0 8px}
+.inv{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.inv li{list-style:none;background:var(--sky);border:1px solid var(--line);border-radius:8px;padding:2px 9px;font-size:.86rem}
+.inv{padding:0;margin-bottom:0}
+.fund-label{color:var(--muted);font-size:.88rem;margin-top:8px}
 .tasks{margin:0;padding-left:18px;color:var(--muted);font-size:.93rem}
-.t-foot{border-top:2px dashed var(--line);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative}
+.t-foot{margin-top:auto;border-top:2px dashed var(--line);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative}
 .t-foot::before,.t-foot::after{content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:var(--sky);border:1.5px solid var(--line)}
 .t-foot::before{left:-11px}.t-foot::after{right:-11px}
 .deadline{font-size:.9rem}
@@ -64,17 +67,14 @@ footer{padding:0 0 40px;color:var(--muted);font-size:.9rem}
 <body>
 <div class="wrap">
   <header>
-    <div class="top">
-      <div class="brand"><span aria-hidden="true">🪂</span> Early Airdrop</div>
-      <button class="icon-btn" id="theme" type="button" aria-label="Temayı değiştir">Tema</button>
-    </div>
-    <h1>Early Projelerin Gerçek Adresi</h1>
-    <p class="lead">Görevleri, son tarihleri ve resmi bağlantıları tek yerde topladım. Güncellendikçe yeni projeler eklenir.</p>
+    <div class="brand"><span aria-hidden="true">🪂</span> Airdrop Radar</div>
+    <h1>Takip ettiğim airdrop’lar</h1>
+    <p class="lead">Görevleri, aldıkları yatırımları, yatırımcıları ve son tarihleri tek yerde topladım. Güncellendikçe yeni projeler eklenir.</p>
   </header>
 
   <main>
     <div class="tools">
-      <input type="search" id="q" placeholder="Proje veya ağ ara…" aria-label="Proje ara">
+      <input type="search" id="q" placeholder="Proje, ağ veya yatırımcı ara…" aria-label="Proje ara">
       <div class="chips" id="status" role="group" aria-label="Duruma göre filtrele"></div>
     </div>
     <div class="chips" id="chains" role="group" aria-label="Ağa göre filtrele" style="margin-bottom:18px"></div>
@@ -82,7 +82,7 @@ footer{padding:0 0 40px;color:var(--muted);font-size:.9rem}
     <section class="grid" id="grid"></section>
 
     <div class="note">
-      <b>Yatırım tavsiyesi değildir.</b> Burada paylaşılanlar yalnızca bilgilendirme amaçlıdır. Her zaman resmi siteyi kontrol et, cüzdan şifreni / seed phrase’ini kimseyle paylaşma ve ana cüzdanın yerine ayrı bir cüzdan kullan. Bir airdrop’ın gerçekleşeceğinin veya değer taşıyacağının garantisi yoktur.
+      <b>Yatırım tavsiyesi değildir.</b> Burada paylaşılanlar yalnızca bilgilendirme amaçlıdır. Bir projenin yatırım alması ya da güçlü yatırımcılara sahip olması airdrop’ın gerçekleşeceği veya değer taşıyacağı anlamına gelmez. Her zaman resmi siteyi kontrol et, seed phrase’ini kimseyle paylaşma ve ana cüzdanın yerine ayrı bir cüzdan kullan.
     </div>
   </main>
 
@@ -94,36 +94,54 @@ footer{padding:0 0 40px;color:var(--muted);font-size:.9rem}
    PROJELERİ BURADAN DÜZENLE
    Aşağıdaki liste örnek veridir. Kendi projelerinle değiştir.
    status: "active" | "soon" | "ended"
-   deadline: "YYYY-MM-DD" (boş bırakılabilir: "")
+   deadline: "YYYY-MM-DD" (bilinmiyorsa "")
+   funding: toplam alınan yatırım, ör. "12 milyon $" (bilinmiyorsa "")
+   round: yatırım turu, ör. "Seed", "Seri A" (bilinmiyorsa "")
+   investors: yatırımcı listesi, ör. ["Fon 1", "Fon 2"] (yoksa [])
    ============================================================ */
 const PROJECTS = [
- 
-
   {
-    name: "SteepUp", chain: "Giwa", status: "soon", deadline: "",
-    reward: "Açıklanmadı",
-    desc: "Erken kullanıcılar için ödül sinyalleri var, takipte kal.",
-    tasks: ["Waitlist’e kaydol", "Arkadaş davet et"],
-    link: "https://stepupcrew.com/?ref=7USVXWBC"
+    name: "Örnek Proje A", chain: "Ethereum", status: "active", deadline: "2026-12-15",
+    reward: "Token + NFT",
+    funding: "12 milyon $", round: "Seri A",
+    investors: ["Örnek Yatırımcı 1", "Örnek Yatırımcı 2", "Örnek Yatırımcı 3"],
+    desc: "Testnet üzerinde işlem yaparak puan topla. Puanlar snapshot’ta token’a dönüşebilir.",
+    tasks: ["Cüzdanı bağla", "Testnet’te 5 swap yap", "Discord’a katıl"],
+    link: "https://example.com"
   },
-    {
-    name: "BingoFi", chain: "Giwa", status: "active", deadline: "",
+  {
+    name: "Örnek Proje B", chain: "Solana", status: "active", deadline: "2026-11-30",
     reward: "Puan sistemi",
-    desc: "Günlük, haftalık ve sezonluk görevleri tamamlayarak puan kazan. ",
-    tasks: ["Hesap oluştur", "Oyun oyna", "Arkadaş davet et"],
-    link: "https://app.thebingofi.xyz/?ref=24HKZVZB"
+    funding: "4,5 milyon $", round: "Seed",
+    investors: ["Örnek Yatırımcı 4", "Örnek Yatırımcı 5"],
+    desc: "Likidite sağlayarak ve günlük görevleri tamamlayarak sezon puanı kazan.",
+    tasks: ["Hesap oluştur", "Likidite ekle", "Arkadaş davet et"],
+    link: "https://example.com"
   },
-
+  {
+    name: "Örnek Proje C", chain: "Base", status: "soon", deadline: "",
+    reward: "Açıklanmadı",
+    funding: "", round: "", investors: [],
+    desc: "Mainnet yakında. Erken kullanıcılar için ödül sinyalleri var, takipte kal.",
+    tasks: ["Waitlist’e kaydol", "X hesabını takip et"],
+    link: "https://example.com"
+  },
+  {
+    name: "Örnek Proje D", chain: "Arbitrum", status: "ended", deadline: "2026-09-01",
+    reward: "Dağıtıldı",
+    funding: "30 milyon $", round: "Seri B",
+    investors: ["Örnek Yatırımcı 1", "Örnek Yatırımcı 6"],
+    desc: "Claim dönemi tamamlandı. Arşiv olarak burada duruyor.",
+    tasks: ["Snapshot alındı"],
+    link: "https://example.com"
+  }
 ];
 
-const STATUS = {active:"Aktif", soon:"Waitlist", ended:"Bitti"};
+const STATUS = {active:"Aktif", soon:"Yakında", ended:"Bitti"};
 const state = {q:"", status:"all", chain:"all"};
 const $ = id => document.getElementById(id);
 
-function daysLeft(d){
-  if(!d) return null;
-  return Math.ceil((new Date(d+"T23:59:59") - new Date())/86400000);
-}
+function daysLeft(d){ return d ? Math.ceil((new Date(d+"T23:59:59") - new Date())/86400000) : null; }
 function deadlineText(p){
   if(p.status==="ended") return ["Bitti", p.deadline ? new Date(p.deadline).toLocaleDateString("tr-TR") : "—"];
   const n = daysLeft(p.deadline);
@@ -132,6 +150,15 @@ function deadlineText(p){
   return ["Kalan süre", n===0 ? "Bugün bitiyor" : n+" gün"];
 }
 function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function fundHtml(p){
+  const inv = (p.investors||[]);
+  return `<div class="fund">
+    <div class="fund-top"><span>Aldığı yatırım</span><b>${p.funding ? esc(p.funding) : "Açıklanmadı"}</b></div>
+    ${p.round ? `<p class="round">${esc(p.round)} turu</p>` : ""}
+    ${inv.length ? `<div class="fund-label">Yatırımcılar</div><ul class="inv">${inv.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>` : `<div class="fund-label">Yatırımcı bilgisi yok</div>`}
+  </div>`;
+}
 
 function chips(el, items, key){
   el.innerHTML = "";
@@ -145,7 +172,7 @@ function chips(el, items, key){
 }
 
 function render(){
-  chips($("status"), [["all","Hepsi"],["active","Aktif"],["soon","Waitlist"],["ended","Bitti"]], "status");
+  chips($("status"), [["all","Hepsi"],["active","Aktif"],["soon","Yakında"],["ended","Bitti"]], "status");
   const chains = [...new Set(PROJECTS.map(p=>p.chain))].sort();
   chips($("chains"), [["all","Tüm ağlar"], ...chains.map(c=>[c,c])], "chain");
 
@@ -153,7 +180,7 @@ function render(){
   const list = PROJECTS.filter(p =>
     (state.status==="all" || p.status===state.status) &&
     (state.chain==="all" || p.chain===state.chain) &&
-    (!q || (p.name+" "+p.chain+" "+p.desc).toLowerCase().includes(q))
+    (!q || (p.name+" "+p.chain+" "+p.desc+" "+(p.investors||[]).join(" ")).toLowerCase().includes(q))
   );
 
   $("count").textContent = list.length + " proje listeleniyor";
@@ -164,6 +191,7 @@ function render(){
         <div class="t-head"><h2>${esc(p.name)}</h2><span class="status s-${p.status}">${STATUS[p.status]}</span></div>
         <p class="meta">${esc(p.chain)} • Ödül: ${esc(p.reward)}</p>
         <p class="desc">${esc(p.desc)}</p>
+        ${fundHtml(p)}
         <ul class="tasks">${p.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
       </div>
       <div class="t-foot">
@@ -176,11 +204,6 @@ function render(){
 
 $("q").addEventListener("input", e => { state.q = e.target.value; render(); });
 $("y").textContent = new Date().getFullYear();
-$("theme").onclick = () => {
-  const r = document.documentElement;
-  const dark = r.dataset.theme ? r.dataset.theme==="dark" : matchMedia("(prefers-color-scheme:dark)").matches;
-  r.dataset.theme = dark ? "light" : "dark";
-};
 render();
 </script>
 </body>

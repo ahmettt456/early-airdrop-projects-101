@@ -101,7 +101,7 @@ footer{padding:0 0 40px;color:var(--muted);font-size:.9rem}
    ============================================================ */
 const PROJECTS = [
   {
-    name: "SteepUp", chain: "Giwa", status: "waitlist", deadline: "",
+    name: "SteepUp", chain: "Giwa", status: "Waitlist", deadline: "",
     reward: "Açıklanmadı",
     funding: "", round: "",
     investors: [""],
@@ -137,7 +137,7 @@ const PROJECTS = [
   }
 ];
 
-const STATUS = {active:"Aktif", soon:"Yakında", ended:"Bitti"};
+const STATUS = {active:"Aktif", soon:"Waitlist", ended:"Bitti"};
 const state = {q:"", status:"all", chain:"all"};
 const $ = id => document.getElementById(id);
 
@@ -172,7 +172,7 @@ function chips(el, items, key){
 }
 
 function render(){
-  chips($("status"), [["all","Hepsi"],["active","Aktif"],["soon","Yakında"],["ended","Bitti"]], "status");
+  chips($("status"), [["all","Hepsi"],["active","Aktif"],["soon","Waitlist"],["ended","Bitti"]], "status");
   const chains = [...new Set(PROJECTS.map(p=>p.chain))].sort();
   chips($("chains"), [["all","Tüm ağlar"], ...chains.map(c=>[c,c])], "chain");
 

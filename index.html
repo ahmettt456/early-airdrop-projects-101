@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Airdrop Radar</title>
-<meta name="description" content="Takip ettiğim airdrop projeleri: Kısaca yapılması gerekenleri, aldıkları yatırımlar, yatırımcılar ve son tarihler tek sayfada.">
+<meta name="description" content="The airdrop projects I’m tracking: what to do, funding raised, investors and deadlines, all on one page.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪂</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,21 +68,21 @@ footer{padding:0 0 40px;color:var(--muted);font-size:.9rem}
 <div class="wrap">
   <header>
     <div class="brand"><span aria-hidden="true">🪂</span> Airdrop Radar</div>
-    <h1>Farmladığım airdrop’lar</h1>
-    <p class="lead">Görevleri, aldıkları yatırımları, yatırımcıları ve son tarihleri tek yerde topladım. Güncellendikçe yeni projeler eklenir.</p>
+    <h1>Airdrops I’m farming</h1>
+    <p class="lead">I’ve gathered the tasks, funding raised, investors and deadlines all in one place. New projects are added as I update it.</p>
   </header>
 
   <main>
     <div class="tools">
-      <input type="search" id="q" placeholder="Proje, ağ veya yatırımcı ara…" aria-label="Proje ara">
-      <div class="chips" id="status" role="group" aria-label="Duruma göre filtrele"></div>
+      <input type="search" id="q" placeholder="Search project, chain or investor…" aria-label="Search projects">
+      <div class="chips" id="status" role="group" aria-label="Filter by status"></div>
     </div>
-    <div class="chips" id="chains" role="group" aria-label="Ağa göre filtrele" style="margin-bottom:18px"></div>
+    <div class="chips" id="chains" role="group" aria-label="Filter by chain" style="margin-bottom:18px"></div>
     <p class="count" id="count" aria-live="polite"></p>
     <section class="grid" id="grid"></section>
 
     <div class="note">
-      <b>Yatırım tavsiyesi değildir.</b> Burada paylaşılanlar yalnızca bilgilendirme amaçlıdır. Bir projenin yatırım alması ya da güçlü yatırımcılara sahip olması airdrop’ın gerçekleşeceği veya değer taşıyacağı anlamına gelmez. Her zaman resmi siteyi kontrol et, seed phrase’ini kimseyle paylaşma ve ana cüzdanın yerine ayrı bir cüzdan kullan.
+      <b>Not financial advice.</b> What’s shared here is for informational purposes only. A project having raised funding or having strong investors does not mean an airdrop will happen or that it will have any value. Always check the official site, never share your seed phrase with anyone, and use a separate wallet instead of your main one.
     </div>
   </main>
 
@@ -91,97 +91,97 @@ footer{padding:0 0 40px;color:var(--muted);font-size:.9rem}
 
 <script>
 /* ============================================================
-   PROJELERİ BURADAN DÜZENLE
-   Aşağıdaki liste örnek veridir. Kendi projelerinle değiştir.
+   EDIT YOUR PROJECTS HERE
+   The list below is sample data. Replace it with your own projects.
    status: "active" | "soon" | "ended"
-   deadline: "YYYY-MM-DD" (bilinmiyorsa "")
-   funding: toplam alınan yatırım, ör. "12 milyon $" (bilinmiyorsa "")
-   round: yatırım turu, ör. "Seed", "Seri A" (bilinmiyorsa "")
-   investors: yatırımcı listesi, ör. ["Fon 1", "Fon 2"] (yoksa [])
+   deadline: "YYYY-MM-DD" (use "" if unknown)
+   funding: total funding raised, e.g. "$12M" (use "" if unknown)
+   round: funding round, e.g. "Seed", "Series A" (use "" if unknown)
+   investors: list of investors, e.g. ["Fund 1", "Fund 2"] (use [] if none)
    ============================================================ */
 const PROJECTS = [
   {
     name: "SteepUp", chain: "Giwa", status: "soon", deadline: "",
-    reward: "Açıklanmadı",
+    reward: "Undisclosed",
     funding: "", round: "",
     investors: [],
-    desc: "Waitlist giriş yap ve görevleri tamamla",
-    tasks: ["Waitlist gir", "Sosyal görevleri tamamla"],
+    desc: "Join the waitlist and complete the tasks",
+    tasks: ["Join the waitlist", "Complete the social tasks"],
     link: "https://stepupcrew.com/"
   },
- 
+
   {
-    name: "BingoFİ", chain: "Giwa", status: "active", deadline: "",
-    reward: "Puan",
+    name: "BingoFi", chain: "Giwa", status: "active", deadline: "",
+    reward: "Points",
     funding: "", round: "",
     investors: [],
-    desc: "Günlük, haftalık ve sezonluk görevleri yap puan kazan",
-    tasks: ["Giriş yap", "Cüzdanını bağla" , "Oyun oyna"],
+    desc: "Complete daily, weekly and seasonal tasks to earn points",
+    tasks: ["Log in", "Connect your wallet", "Play games"],
     link: "https://app.thebingofi.xyz/"
   },
-    
+
   {
     name: "Pascal", chain: "PM", status: "active", deadline: "",
-    reward: "Potansiyel Puan Sistemi",
-    funding: "$15M", round: "Series-A",
+    reward: "Potential Points System",
+    funding: "$15M", round: "Series A",
     investors: ["USV", "Wintermute"],
-    desc: "Trade at, doğal volume kas",
-    tasks: ["Mail ile Giriş yap", "X hesabını bağla" , "Trade at"],
+    desc: "Trade and build organic volume",
+    tasks: ["Log in with email", "Connect your X account", "Trade"],
     link: "https://app.pascal.trade/join/solana"
   },
 
-    {
+  {
     name: "Share", chain: "PM", status: "active", deadline: "",
-    reward: "Puan",
+    reward: "Points",
     funding: "$5M", round: "Undisclosed",
     investors: ["Coinbase"],
-    desc: "Trade at, doğal volume kas. Yakında puan sistemi gelecek",
-    tasks: ["Cüzdan ile Giriş yap", "Trade at"],
+    desc: "Trade and build organic volume. A points system is coming soon",
+    tasks: ["Log in with your wallet", "Trade"],
     link: "https://share.xyz/r/dortyuzellialti"
   },
-  
-    {
+
+  {
     name: "XO", chain: "PM", status: "active", deadline: "",
-    reward: "Puan",
+    reward: "Points",
     funding: "$7.2M", round: "Seed",
     investors: ["Coinbase", "Delphi Ventures"],
-    desc: "Trade at, puan kazan",
-    tasks: ["Hesap oluştur", "Trade at"],
+    desc: "Trade and earn points",
+    tasks: ["Create an account", "Trade"],
     link: "https://beta.xo.market/?r=dortyuzellialti"
   },
-    
+
   {
     name: "Bento", chain: "PM", status: "active", deadline: "",
-    reward: "Potansiyel Puan Sistemi",
+    reward: "Potential Points System",
     funding: "$500K", round: "Incubation",
     investors: ["Yzi Labs"],
-    desc: "Trade at, doğal volume kas",
-    tasks: ["Hesap oluştur", "Trade at"],
+    desc: "Trade and build organic volume",
+    tasks: ["Create an account", "Trade"],
     link: "https://app.bento.fun/?invite=BE9NT5LRIT"
   },
 
 ];
 
-const STATUS = {active:"Aktif", soon:"Waitlist", ended:"Bitti"};
+const STATUS = {active:"Active", soon:"Waitlist", ended:"Ended"};
 const state = {q:"", status:"all", chain:"all"};
 const $ = id => document.getElementById(id);
 
 function daysLeft(d){ return d ? Math.ceil((new Date(d+"T23:59:59") - new Date())/86400000) : null; }
 function deadlineText(p){
-  if(p.status==="ended") return ["Bitti", p.deadline ? new Date(p.deadline).toLocaleDateString("tr-TR") : "—"];
+  if(p.status==="ended") return ["Ended", p.deadline ? new Date(p.deadline).toLocaleDateString("en-US") : "—"];
   const n = daysLeft(p.deadline);
-  if(n===null) return ["Son tarih", "Belirsiz"];
-  if(n<0) return ["Son tarih", "Geçti"];
-  return ["Kalan süre", n===0 ? "Bugün bitiyor" : n+" gün"];
+  if(n===null) return ["Deadline", "Unknown"];
+  if(n<0) return ["Deadline", "Passed"];
+  return ["Time left", n===0 ? "Ends today" : n + (n===1 ? " day" : " days")];
 }
 function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 
 function fundHtml(p){
   const inv = (p.investors||[]);
   return `<div class="fund">
-    <div class="fund-top"><span>Aldığı yatırım</span><b>${p.funding ? esc(p.funding) : "Açıklanmadı"}</b></div>
-    ${p.round ? `<p class="round">${esc(p.round)} turu</p>` : ""}
-    ${inv.length ? `<div class="fund-label">Yatırımcılar</div><ul class="inv">${inv.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>` : `<div class="fund-label">Yatırımcı bilgisi yok</div>`}
+    <div class="fund-top"><span>Funding raised</span><b>${p.funding ? esc(p.funding) : "Undisclosed"}</b></div>
+    ${p.round ? `<p class="round">${esc(p.round)} round</p>` : ""}
+    ${inv.length ? `<div class="fund-label">Investors</div><ul class="inv">${inv.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>` : `<div class="fund-label">No investor info</div>`}
   </div>`;
 }
 
@@ -197,9 +197,9 @@ function chips(el, items, key){
 }
 
 function render(){
-  chips($("status"), [["all","Hepsi"],["active","Aktif"],["soon","Waitlist"],["ended","Bitti"]], "status");
+  chips($("status"), [["all","All"],["active","Active"],["soon","Waitlist"],["ended","Ended"]], "status");
   const chains = [...new Set(PROJECTS.map(p=>p.chain))].sort();
-  chips($("chains"), [["all","Tüm ağlar"], ...chains.map(c=>[c,c])], "chain");
+  chips($("chains"), [["all","All chains"], ...chains.map(c=>[c,c])], "chain");
 
   const q = state.q.trim().toLowerCase();
   const list = PROJECTS.filter(p =>
@@ -208,23 +208,23 @@ function render(){
     (!q || (p.name+" "+p.chain+" "+p.desc+" "+(p.investors||[]).join(" ")).toLowerCase().includes(q))
   );
 
-  $("count").textContent = list.length + " proje listeleniyor";
+  $("count").textContent = list.length + (list.length===1 ? " project listed" : " projects listed");
   $("grid").innerHTML = list.length ? list.map(p => {
     const [dl, dv] = deadlineText(p);
     return `<article class="ticket">
       <div class="t-main">
         <div class="t-head"><h2>${esc(p.name)}</h2><span class="status s-${p.status}">${STATUS[p.status]}</span></div>
-        <p class="meta">${esc(p.chain)} • Ödül: ${esc(p.reward)}</p>
+        <p class="meta">${esc(p.chain)} • Reward: ${esc(p.reward)}</p>
         <p class="desc">${esc(p.desc)}</p>
         ${fundHtml(p)}
         <ul class="tasks">${p.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
       </div>
       <div class="t-foot">
         <div class="deadline">${dl}<b>${dv}</b></div>
-        <a class="go" href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">Projeye git</a>
+        <a class="go" href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">Go to project</a>
       </div>
     </article>`;
-  }).join("") : `<p class="empty">Eşleşen proje yok. Filtreleri temizleyip tekrar dene.</p>`;
+  }).join("") : `<p class="empty">No matching projects. Clear the filters and try again.</p>`;
 }
 
 $("q").addEventListener("input", e => { state.q = e.target.value; render(); });
